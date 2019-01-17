@@ -1,0 +1,101 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"loadBalancerSku": {
+			"type": "string",
+			"allowedValues": [
+				"Standard",
+				"Basic"
+			],
+			"metadata": {
+				"description": "Standard or Basic"
+			},
+			"defaultValue": "Standard"
+		},
+		"location": {
+			"type": "string",
+			"metadata": {
+				"description": "Deployment location"
+			}
+		},
+		// vnet parameters
+		"virtualNetworkRG": {
+			"type": "string",
+			"metadata": {
+				"description": "Name of the Virtual Network Resource Group"
+			}
+		},
+		"loadBalancerName": {
+			"type": "string",
+			"metadata": {
+				"description": "Name of the inbound load balancer"
+			}
+		},
+		"LBpublicIPAddressName": {
+			"type": "string"
+		}
+	},
+	"resources": [
+		{ 
+			"apiVersion": "2017-08-01",
+			"type": "Microsoft.Network/loadBalancers",
+			"name": "[parameters('loadBalancerName')]",
+			"location": "[parameters('location')]",
+			"sku":
+			{
+				"name": "[parameters('loadBalancerSku')]"
+			},
+			"dependsOn": [
+				"[concat('Microsoft.Network/publicIPAddresses/', parameters('LBPublicIPAddressName'))]"
+			],
+			"properties": {
+				"frontendIPConfigurations": [
+					{
+						"name": "Frontend",
+						"properties": {
+							"publicIPAddress": {
+								"id": "[resourceId(parameters('virtualNetworkRG'), 'Microsoft.Network/publicIPAddresses', parameters('LBPublicIPAddressName'))]"
+							}
+						}
+					}
+				],
+				"backendAddressPools": [
+					{
+						"name": "BackendPool"
+					}
+				],
+				"probes": [
+					{
+						"properties": {
+							"protocol": "Tcp",
+							"port": 22,
+							"intervalInSeconds": 10,
+							"numberOfProbes": 2
+						},
+						"name": "lbprobe"
+					}
+				]
+			}
+		},
+		{
+			"apiVersion": "2018-08-01",
+			"type": "Microsoft.Network/publicIPAddresses",
+			"name": "[parameters('LBpublicIPAddressName')]",
+			"location": "[parameters('location')]",
+			"sku": {
+				"name": "[parameters('loadBalancerSku')]"
+			},
+			"properties": {
+				"publicIPAllocationMethod": "Static",
+				"publicIPAddressVersion": "IPv4"
+			}
+		}
+	],
+	"outputs" : {
+		"LoadBalancerFrontEndIp": {
+			"value": "[reference(concat('Microsoft.Network/loadBalancers/', parameters('loadBalancerName'))).frontendIPConfigurations[0].properties.privateIPAddress ]",
+			"type" : "string"
+		}
+	}
+}
