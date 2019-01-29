@@ -61,7 +61,26 @@
 			"metadata": {
 				"description": "Trust subnet CIDR"
 			}
-		}
+		},
+		"newGatewaySubnetName": {
+			"type": "string",
+			"defaultValue": "192.168.255.0/24",
+			"metadata": {
+				"description": "Gateway subnet CIDR"
+			}
+		},
+		"routeTables_name":{
+	    	"type": "string",
+	    	"metadata": {
+	    		"description": "Name of the UDR applied to the GatewatSubnet"
+	    	}
+	    },
+        "GatewaySubnetAddressPrefix": {
+            "type": "string",
+            "metadata": {
+            		"description": "Value should be in the format 10.0.254.0/24"
+            }
+        }		
 	},
 	"variables": {
 		"location"         : "[resourceGroup().location]",
@@ -98,6 +117,15 @@
 						"id": "[resourceId('Microsoft.Network/networkSecurityGroups', concat(parameters('nsgName'), '-trust'))]"
 					}
 				}
+			},
+			{
+				"name": "[parameters('newGatewaySubnetName'))]",
+				"properties": {
+					"addressPrefix": "[parameters('GatewaySubnetAddressPrefix')]",
+					"routeTable": {
+						"id": "[resourceId('Microsoft.Network/routeTables', parameters('routeTables_name'))]"
+					}
+				}
 			}
 		]
 	},
@@ -107,6 +135,9 @@
 			"type": "Microsoft.Network/virtualNetworks",
 			"location": "[variables('location')]",
 			"apiVersion": "2015-06-15",
+			"dependsOn": [
+				"[concat('Microsoft.Network/routeTables/', parameters('routeTables_name'))]"
+			],
 			"properties": {
 				"addressSpace": {
 					"addressPrefixes": [
@@ -115,6 +146,16 @@
 				},
 				"subnets": "[variables('subnets')]"
 			}
+		},
+		{
+			"type": "Microsoft.Network/routeTables",
+			"name": "[parameters('routeTables_name')]",
+			"apiVersion": "2018-08-01",
+			"location": "[variables('location')]",
+			"properties": {
+				"disableBgpRoutePropagation": false
+				},
+			"dependsOn": []
 		}
 	],
 	"outputs": {

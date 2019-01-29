@@ -441,6 +441,15 @@
 					},
 					"trustSubnetPrefix": {
 						"value": "[parameters('trustedSubnetPrefix')]"
+					},
+					"newGatewaySubnetName": {
+						"value": "[parameters('newGatewaySubnetName')]"
+					},
+					"routeTables_name": {
+						"value": "[parameters('routeTables_name')]"
+					},
+					"GatewaySubnetAddressPrefix" :{
+						"value": "[parameters('GatewaySubnetAddressPrefix')]"
 					}
 				}
 			}
@@ -607,7 +616,7 @@
             "type": "Microsoft.Network/virtualNetworkGateways",
             "location": "[variables('location')]",
             "dependsOn": [
-                "[parameters('newGatewaySubnetName')]",
+                "Microsoft.Resources/deployments/deployVNet",
                 "[concat('Microsoft.Network/publicIPAddresses/', parameters('GatewayPublicIpAddressName'))]"
             ],
             "properties": {
@@ -631,32 +640,6 @@
                     "tier": "[parameters('GatewaySku')]"
                 }
             }
-        },
-        {
-            "apiVersion": "2018-08-01",
-            "type": "Microsoft.Network/virtualNetworks/subnets",
-            "name": "[concat(parameters('virtualNetworkName'), '/', parameters('newGatewaySubnetName'))]",
-            "location": "[variables('location')]",
-            "dependsOn": [
-            	"Microsoft.Resources/deployments/deployVNet",
-            	"[concat('Microsoft.Network/routeTables/', parameters('routeTables_name'))]"
-            ],
-            "properties": {
-                "addressPrefix": "[parameters('GatewaySubnetAddressPrefix')]",
-                "routeTable": {
-                    "id": "[resourceId('Microsoft.Network/routeTables', parameters('routeTables_name'))]"
-                }
-            }
-        },
-        {
-            "type": "Microsoft.Network/routeTables",
-            "name": "[parameters('routeTables_name')]",
-            "apiVersion": "2018-08-01",
-            "location": "[variables('location')]",
-            "properties": {
-                "disableBgpRoutePropagation": false
-            },
-            "dependsOn": []
         },
         {
             "apiVersion": "2018-08-01",
