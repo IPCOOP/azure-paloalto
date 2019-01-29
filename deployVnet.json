@@ -119,7 +119,7 @@
 				}
 			},
 			{
-				"name": "[parameters('newGatewaySubnetName'))]",
+				"name": "[parameters('newGatewaySubnetName')]",
 				"properties": {
 					"addressPrefix": "[parameters('GatewaySubnetAddressPrefix')]",
 					"routeTable": {
