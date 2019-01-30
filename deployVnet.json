@@ -196,7 +196,7 @@
             "type": "Microsoft.Network/virtualNetworkGateways",
             "location": "[variables('location')]",
             "dependsOn": [
-                "Microsoft.Resources/deployments/deployVNet",
+                "[concat('Microsoft.Network/virtualNetworks/', variables('vnetname'))]",
                 "[concat('Microsoft.Network/publicIPAddresses/', parameters('GatewayPublicIpAddressName'))]"
             ],
             "properties": {
