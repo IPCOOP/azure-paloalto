@@ -487,9 +487,6 @@
 					},
 					"connectionType" :{
 						"value": "[parameters('connectionType')]"
-					},
-					"routingWeight" :{
-						"value": "[parameters('routingWeight')]"
 					}
 				}
 			}

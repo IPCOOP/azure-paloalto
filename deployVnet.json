@@ -110,13 +110,11 @@
         },
         "connectionType": {
             "type": "string"
-        },
-        "routingWeight": {
-            "type": "string"
         }
 	},
 	"variables": {
 		"location"         : "[resourceGroup().location]",
+		"routingWeight": 10,
 		"rgname"           : "[resourceGroup().id]",
 		"vnetname"         : "[parameters('virtualNetworkName')]",
 		"vnetID"           : "[resourceId('Microsoft.Network/virtualNetworks',variables('vnetname'))]",
