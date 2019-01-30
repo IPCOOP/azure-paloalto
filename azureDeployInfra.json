@@ -450,6 +450,39 @@
 					},
 					"GatewaySubnetAddressPrefix" :{
 						"value": "[parameters('GatewaySubnetAddressPrefix')]"
+					},
+					"vnetGatewayName" :{
+						"value": "[parameters('vnetGatewayName')]"
+					},
+					"GatewayPublicIpAddressName" :{
+						"value": "[parameters('GatewayPublicIpAddressName')]"
+					},
+					"vnetGatewayType" :{
+						"value": "[parameters('vnetGatewayType')]"
+					},
+					"GatewaySku" :{
+						"value": "[parameters('GatewaySku')]"
+					},
+					"connectionName" :{
+						"value": "[parameters('connectionName')]"
+					},
+					"authkey" :{
+						"value": "[parameters('authkey')]"
+					},
+					"exprouteSubscriptionId" :{
+						"value": "[parameters('exprouteSubscriptionId')]"
+					},
+					"expressrouteRg" :{
+						"value": "[parameters('expressrouteRg')]"
+					},
+					"circuitName" :{
+						"value": "[parameters('circuitName')]"
+					},
+					"connectionType" :{
+						"value": "[parameters('connectionType')]"
+					},
+					"routingWeight" :{
+						"value": "[parameters('routingWeight')]"
 					}
 				}
 			}
@@ -609,66 +642,6 @@
 					}
 				}
 			}
-		},
-		{
-            "apiVersion": "2018-08-01",
-            "name": "[parameters('vnetGatewayName')]",
-            "type": "Microsoft.Network/virtualNetworkGateways",
-            "location": "[variables('location')]",
-            "dependsOn": [
-                "Microsoft.Resources/deployments/deployVNet",
-                "[concat('Microsoft.Network/publicIPAddresses/', parameters('GatewayPublicIpAddressName'))]"
-            ],
-            "properties": {
-                "gatewayType": "[parameters('vnetGatewayType')]",
-                "ipConfigurations": [
-                    {
-                        "name": "default",
-                        "properties": {
-                            "privateIPAllocationMethod": "Dynamic",
-                            "subnet": {
-                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('newGatewaySubnetName'))]"
-                            },
-                            "publicIpAddress": {
-                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', parameters('GatewayPublicIpAddressName'))]"
-                            }
-                        }
-                    }
-                ],
-                "sku": {
-                    "name": "[parameters('GatewaySku')]",
-                    "tier": "[parameters('GatewaySku')]"
-                }
-            }
-        },
-        {
-            "apiVersion": "2018-08-01",
-            "type": "Microsoft.Network/publicIPAddresses",
-            "name": "[parameters('GatewayPublicIpAddressName')]",
-            "location": "[variables('location')]",
-            "properties": {
-                "publicIPAllocationMethod": "Dynamic"
-            }
-        },
-        {
-			"apiVersion": "2015-06-15",
-			"type": "Microsoft.Network/connections",
-			"name": "[parameters('connectionName')]",
-			"location": "[variables('location')]",
-			"dependsOn": [
-			"[concat('Microsoft.Network/virtualNetworkGateways/', parameters('vnetGatewayName'))]"
-			],
-			"properties": {
-				"authorizationKey": "[parameters('authkey')]",
-				"virtualNetworkGateway1": {
-				  "id": "[resourceId('Microsoft.Network/virtualNetworkGateways',parameters('vnetGatewayName'))]"
-				},
-				"peer": {
-				  "id": "[resourceId(parameters('exprouteSubscriptionId'),parameters('expressrouteRg'),'Microsoft.Network/expressRouteCircuits',parameters('circuitName'))]"
-				},
-				"connectionType": "[parameters('connectionType')]",
-				"routingWeight": "[variables('routingWeight')]"
-			    }
 		}
 	],
 	"outputs": {}
