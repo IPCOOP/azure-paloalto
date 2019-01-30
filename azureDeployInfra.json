@@ -335,6 +335,12 @@
 	    	"metadata": {
 	    		"description": "Name of the UDR applied to the GatewatSubnet"
 	    	}
+	    },
+	    "vnetResourceGroupName":{
+	    	"type": "string",
+	    	"metadata": {
+	    		"description": "Resource Group Name for the vNet"
+	    	}
 	    }
 	},
 	"variables": {
@@ -405,6 +411,7 @@
 			"name": "deployVnet",
 			"type": "Microsoft.Resources/deployments",
 			"apiVersion": "2015-01-01",
+			"resourceGroup": "[parameters('vnetResourceGroupName')]",
 			"dependsOn": [
 				"Microsoft.Resources/deployments/deployNsg"
 			],
