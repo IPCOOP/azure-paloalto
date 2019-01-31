@@ -513,7 +513,7 @@
 						"value": "[variables('location')]"
 					},
 					"virtualNetworkRG": {
-						"value": "[variables('vnetResourceGroupName')]"
+						"value": "[parameters('vnetResourceGroupName')]"
 					},
 					"virtualNetworkName": {
 						"value": "[parameters('virtualNetworkName')]"
@@ -551,7 +551,7 @@
 						"value": "[variables('location')]"
 					},
 					"virtualNetworkRG": {
-						"value": "[variables('vnetResourceGroupName')]"
+						"value": "[parameters('vnetResourceGroupName')]"
 					},
 					"loadBalancerName": {
 						"value": "[parameters('ExternalLoadBalancerName')]"
@@ -595,7 +595,7 @@
 						"value": "[variables('storageName')]"
 					},
 					"virtualNetworkRG": {
-						"value": "[variables('vnetResourceGroupName')]"
+						"value": "[parameters('vnetResourceGroupName')]"
 					},
 					"virtualNetworkName": {
 						"value": "[parameters('virtualNetworkName')]"
