@@ -55,7 +55,7 @@
 						"name": "Frontend",
 						"properties": {
 							"publicIPAddress": {
-								"id": "[resourceId(parameters('virtualNetworkRG'), 'Microsoft.Network/publicIPAddresses', parameters('LBPublicIPAddressName'))]"
+								"id": "[resourceId(parameters('location'), 'Microsoft.Network/publicIPAddresses', parameters('LBPublicIPAddressName'))]"
 							}
 						}
 					}
