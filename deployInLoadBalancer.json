@@ -34,6 +34,9 @@
 		},
 		"LBpublicIPAddressName": {
 			"type": "string"
+		},
+		"rgname": {
+			"type": "string"
 		}
 	},
 	"resources": [
@@ -55,7 +58,7 @@
 						"name": "Frontend",
 						"properties": {
 							"publicIPAddress": {
-								"id": "[resourceId(parameters('location'), 'Microsoft.Network/publicIPAddresses', parameters('LBPublicIPAddressName'))]"
+								"id": "[resourceId(parameters('rgname'), 'Microsoft.Network/publicIPAddresses', parameters('LBPublicIPAddressName'))]"
 							}
 						}
 					}

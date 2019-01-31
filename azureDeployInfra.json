@@ -550,6 +550,9 @@
 					"location": {
 						"value": "[variables('location')]"
 					},
+					"rgname": {
+						"value": "[variables('rgname')]"
+					},
 					"virtualNetworkRG": {
 						"value": "[parameters('vnetResourceGroupName')]"
 					},
