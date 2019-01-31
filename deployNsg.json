@@ -33,7 +33,7 @@
 					"protocol": "*",
 					"sourcePortRange": "*",
 					"destinationPortRange": "*",
-					"sourceAddressPrefixes": "[parameters('srcIPInboundNSG')]",
+					"sourceAddressPrefixes": ["[parameters('srcIPInboundNSG')]"],
 					"destinationAddressPrefix": "*",
 					"access": "Allow",
 					"priority": 100,
