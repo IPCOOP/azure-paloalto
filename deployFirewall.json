@@ -282,7 +282,7 @@
 			"condition": "[equals(parameters('loadBalancerSku'), 'Standard')]", 
 			"apiVersion": "2017-08-01",
 			"type": "Microsoft.Network/publicIPAddresses",
-			"name": "[concat(parameters('outboundSubnetName'), '-pip-', copyindex(1))]",
+			"name": "[concat(parameters('virtualMachineName'), '-pip-', copyindex(1))]",
 			"sku": {
 				"name": "[parameters('loadBalancerSku')]"
 			},
@@ -302,7 +302,7 @@
 			"name": "[concat(parameters('virtualMachineName'), copyindex(1), '-nic1')]",
 			"type": "Microsoft.Network/networkInterfaces",
 			"dependsOn": [
-				"[concat('Microsoft.Network/publicIPAddresses/', parameters('outboundSubnetName'), '-pip-', copyindex(1))]"
+				"[concat('Microsoft.Network/publicIPAddresses/', parameters('virtualMachineName'), '-pip-', copyindex(1))]"
 			],
 			"location": "[parameters('location')]",
 			"apiVersion": "2015-06-15",
@@ -318,10 +318,10 @@
 						"properties": {
 							"privateIPAllocationMethod": "Dynamic",
 							"publicIPAddress": {
-								"id": "[resourceId('Microsoft.Network/publicIPAddresses/', concat(parameters('outboundSubnetName'), '-pip-', copyindex(1)))]"
+								"id": "[resourceId('Microsoft.Network/publicIPAddresses/', concat(parameters('virtualMachineName'), '-pip-', copyindex(1)))]"
 							},
 							"subnet": {
-								"id": "[concat(variables('vnetId'),'/subnets/', parameters ('outboundSubnetName'))]"
+								"id": "[concat(variables('vnetId'),'/subnets/', parameters ('virtualMachineName'))]"
 							},
                             "loadBalancerBackendAddressPools": [
                                 {
@@ -353,7 +353,7 @@
 						"properties": {
 							"privateIPAllocationMethod": "Dynamic",
 							"subnet": {
-								"id": "[concat(variables('vnetId'),'/subnets/', parameters ('outboundSubnetName'))]"
+								"id": "[concat(variables('vnetId'),'/subnets/', parameters ('virtualMachineName'))]"
 							}
 						}
 					}
