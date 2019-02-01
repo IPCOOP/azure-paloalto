@@ -9,7 +9,7 @@
 				"type": "string"
 			},
 			"srcIPInboundNSG": {
-				"type": "string"
+				"type": "array"
 			},
 			"virtualNetworkAddressPrefix": {
 				"type": "string"

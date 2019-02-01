@@ -36,11 +36,11 @@
 			}
 		},
 		"networkSecurityGroupInboundIP": {
-			"type": "string",
+			"type": "array",
 			"metadata": {
 				"description": "Your source public IP address. Added to the inbound NSG on eth0 (MGMT), to restrict access to the deployment."
 			},
-			"defaultValue": "1.1.1.1/32"
+			"defaultValue": ["1.1.1.1/32"]
 		},
 		"avSetName": {
 			"type": "string",
