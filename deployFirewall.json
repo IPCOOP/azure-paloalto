@@ -321,7 +321,7 @@
 								"id": "[resourceId('Microsoft.Network/publicIPAddresses/', concat(parameters('virtualMachineName'), '-pip-', copyindex(1)))]"
 							},
 							"subnet": {
-								"id": "[concat(variables('vnetId'),'/subnets/', parameters ('virtualMachineName'))]"
+								"id": "[concat(variables('vnetId'),'/subnets/', parameters ('outboundSubnetName'))]"
 							},
                             "loadBalancerBackendAddressPools": [
                                 {
@@ -353,7 +353,7 @@
 						"properties": {
 							"privateIPAllocationMethod": "Dynamic",
 							"subnet": {
-								"id": "[concat(variables('vnetId'),'/subnets/', parameters ('virtualMachineName'))]"
+								"id": "[concat(variables('vnetId'),'/subnets/', parameters ('outboundSubnetName'))]"
 							}
 						}
 					}
